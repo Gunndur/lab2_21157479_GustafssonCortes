@@ -1,3 +1,8 @@
+%MÓDULOS
+:-use_module(option_21157479_GustafssonCortes.pl).
+
+%#################################################################
+
 /*Predicados:
 option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,Option).
 
@@ -44,16 +49,6 @@ option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,Option):-
     all_string(Keyword),
     Option = [Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword].
 
-
-positivo_mayor_que_cero(Numero):-
-    integer(Numero), Numero >= 0.
-
-all_string([]).
-all_string([H|T]):-
-    string(H),
-    all_string(T).
-
-
 %3)
 
  /*Descripción:
@@ -73,32 +68,6 @@ flow(Id,Name_msg,Option,Flow):-
     all_options(Option),
     delete_duplicate_option(Option,NOption),
     Flow = [Id,Name_msg,NOption].
-
-is_option([Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword]):-
-    option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,[Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword]).
-
-all_options([]).
-all_options(H|T):-
-    is_option(H),
-    all_options(T).
-
-delete_duplicate_id([],Aux,Aux).
-delete_duplicate_id([[Code|T1]|T2],Aux,Result):-
-    cons([Code|T1],Aux,NAux),
-    (is_id_in_list(Code,Aux) ->
-        delete_duplicate_id(T2,Aux,Result);
-        delete_duplicate_id(T2,NAux,Result)).
-
-delete_duplicate_option(Option,NOption):-
-    delete_duplicate_id(Option,[],NOption).
-
-is_id_in_list(_,[]).
-is_id_in_list(Id,[[H|_]|T]):-
-    Id = H;
-    is_id_in_list(Id,T).
-
-cons(A,B,[A|B]).
-
 
 %4)
 
