@@ -51,15 +51,15 @@ option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,Option):-
 
 %3)
 
- /*Descripción:
-  id = entero(+).
-  name-msg = string.
-  Option = Lista de options.
-  Flow = flow
+ /*Descripción: Funcion que construye un flujo de un chatbot identificado mediante su id y verifica que las
+ opciones creadas no se repitan.
  */
 
  /*Dom:
-
+  Id = entero(+).
+  Name_msg = string.
+  Option = Lista de options.
+  Flow = flow.
  */
 
 flow(Id,Name_msg,Option,Flow):-
@@ -71,12 +71,16 @@ flow(Id,Name_msg,Option,Flow):-
 
 %4)
 
- /*Descripción:
-
+ /*Descripción: Modifica un flujo para poder añadirle una nueva opción, pero primero verifica que no esté repetida
+ mediante su id, si está repetida la opción, no es agregada y se mantiene el flujo inicial.
  */
 
  /*Dom:
-
+  Id = entero(+).
+  Name_msg = string.
+  Options = Lista de options.
+  Option = option.
+  NFlow = flow.
  */
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% append(Lista1,[Elem], Lista2).
 
@@ -84,9 +88,6 @@ flowAddOption([Id,Name_msg,Options],Option, NFlow):-
     append(Options,[Option],NOptions),
     delete_duplicate_option(NOptions, NNOptions),
     flow(Id,Name_msg,NNOptions,NFlow).
-
-
-
 
 
 
@@ -99,5 +100,3 @@ flowAddOption([Id,Name_msg,Options],Option, NFlow):-
  /*Dom:
 
  */
-
-
