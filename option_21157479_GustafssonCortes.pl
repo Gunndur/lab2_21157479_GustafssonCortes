@@ -1,6 +1,6 @@
 % % TDA OPTION % %
 
-:-module(option_21157479_GustafssonCortes,[is_option/1,all_options/1,delete_duplicate_id/3,delete_duplicate_option/2,is_id_in_list/2,positivo_mayor_que_cero/1,all_string/1,cons/3]).
+:-module(option_21157479_GustafssonCortes,[is_option/1,all_options/1,is_id_in_list/2,positivo_mayor_que_cero/1,all_string/1,cons/3,unir/3,myMember/2,get_Code_Option/2,get_Message_Option/2,get_CCL_Option/2,get_IFCL_Option/2,get_Keyword_Option/2]).
 
 /*Representación:
 Este TDA representa las opciones/respuestas que puede optar el usuario ante el chatbot, se constituye por un id unico de tipo entero positivo,
@@ -12,12 +12,17 @@ y también posee una lista de las palabras claves, que cada una es de tipo string
 /*Predicados
 is_option([Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword]).
 all_options(List).
-delete_duplicate_id(List,A,B).
-delete_duplicate_option(Option,NOption).
 is_id_in_list(Id,List).
 positivo_mayor_que_cero(Numero).
 all_string(List).
 cons(A,B,C).
+unir(L1,Elemento,L2).
+myMember(X,List).
+get_Code_Option(Option,Code).
+get_Message_Option(Option,Message).
+get_CCL_Option(Option,CCL).
+get_IFCL_Option(Option,IFCL).
+get_Keyword_Option(Option,Keyword).
 */
 
 /*Metas:
@@ -25,7 +30,8 @@ cons(A,B,C).
 
  Secundario: is_option, all_options, delete_duplicate_id,
  delete_duplicate_option, is_id_in_list, positivo_mayor_que_cero,
- all_string, cons.
+ all_string, cons, unir, myMember, get_Code_Option, get_Message_Option,
+ get_CCL_Option, get_IFCL_Option, get_Keyword_Option.
 
 */
 
@@ -39,8 +45,8 @@ cons(A,B,C).
 %En main...
 
 
-/*SELECTORES*/
 
+/*SELECTORES*/
 
 %Descripcion: Selecciona el codigo del option.
 /*Dom:
@@ -79,6 +85,7 @@ get_IFCL_Option([_,_,_,InitialFlowCodeLink,_],InitialFlowCodeLink).
 get_Keyword_Option([_,_,_,_,Keyword],Keyword).
 
 
+
 /*OTRAS OPERACIONES*/
 
 
@@ -90,31 +97,17 @@ is_option([Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword]):-
 %Descripcion: Comprueba que toda una lista sea una lista de Options.
 %Dom: Lista (lista de options).
 all_options([]).
-all_options(H|T):-
+all_options([H|T]):-
     is_option(H),
     all_options(T).
-
-% Descripcion: Elimina los duplicados verificando el id.
-delete_duplicate_id([],Aux,Aux).
-delete_duplicate_id([[Code|T1]|T2],Aux,Result):-
-    cons([Code|T1],Aux,NAux),
-    (is_id_in_list(Code,Aux) ->
-        delete_duplicate_id(T2,Aux,Result);
-        delete_duplicate_id(T2,NAux,Result)).
-
-% Descripcion: Elimina los duplicacos entre opciones, verificando por
-% medio del id.
-delete_duplicate_option(Option,NOption):-
-    delete_duplicate_id(Option,[],NOption).
 
 % Descripcion: Verifica si un id especifico se encuentra en una lista.
 /*Dom:
   ID = entero(+).
   Lista = lista de strings.
 */
-is_id_in_list(_,[]).
-is_id_in_list(Id,[[H|_]|T]):-
-    Id = H;
+is_id_in_list(Id,[[Id|_]|_]).
+is_id_in_list(Id,[_|T]):-
     is_id_in_list(Id,T).
 
 % Descripcion: Cons
@@ -133,9 +126,19 @@ all_string([H|T]):-
     string(H),
     all_string(T).
 
+% Descripcion: Une un elemento a una lista y retorna una segunda lista
+% con ese elemento integrado.
+/*Dom:
+  Lista, Lista2 = Listas del mismo elemento.
+  Elemento = symbol.
+*/
+unir(Lista1,[Elem], Lista2):-
+    append(Lista1, Elem, Lista2).
 
-
-
+% Descripcion: Verifica si se encuentra un elemento en una lista determ.
+% Dom: Elemento x Lista.
+myMember(X,[Lista]):-
+    member(X,Lista).
 
 
 

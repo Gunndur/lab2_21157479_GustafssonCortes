@@ -1,26 +1,28 @@
 %MÓDULOS
-:-use_module(option_21157479_GustafssonCortes.pl).
-
+:-module(main_21157479_GustafssonCortes,[option/6,flow/4,flowAddOption/3,chatbot/6]).
+:-use_module(option_21157479_GustafssonCortes).
+:-use_module(flow_21157479_GustafssonCortes).
+:-use_module(chatbot_21157479_GustafssonCortes).
+:-use_module(system_21157479_GustafssonCortes).
+:-use_module(user_21157479_GustafssonCortes).
+:-use_module(chatHistory_21157479_GustafssonCortes).
 %#################################################################
 
 /*Predicados:
 option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,Option).
-
+flow(Id,Name_msg,Option,Flow).
+flowAddOption([Id,Name_msg,Options],Option, NFlow).
 */
 
 /*Metas:
- Principal: option,
+ Principal: option, flow, flowAddOption.
 
- Secundario:
+ Secundario: --- .
 
 */
 
 %CLAUSULAS:
 %Hechos:
-query(O1,O2):-
-    option(1, "1 - viajar", 2, 4, ["viajar", "turistear", "conocer"], O1),
-    option("hola", "2 - estudiar", 4, 3, ["aprender", "perfeccionarme"], O2).
-
 
 %Reglas:
 
@@ -51,8 +53,7 @@ option(Code,Message,ChatbotCodeLink,InitialFlowCodeLink,Keyword,Option):-
 
 %3)
 
- /*Descripción: Funcion que construye un flujo de un chatbot identificado mediante su id y verifica que las
- opciones creadas no se repitan.
+ /*Descripción: Funcion que construye un flujo de un chatbot.
  */
 
  /*Dom:
@@ -66,8 +67,7 @@ flow(Id,Name_msg,Option,Flow):-
     positivo_mayor_que_cero(Id),
     string(Name_msg),
     all_options(Option),
-    delete_duplicate_option(Option,NOption),
-    Flow = [Id,Name_msg,NOption].
+    Flow = [Id,Name_msg,Option].
 
 %4)
 
@@ -82,21 +82,31 @@ flow(Id,Name_msg,Option,Flow):-
   Option = option.
   NFlow = flow.
  */
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% append(Lista1,[Elem], Lista2).
 
 flowAddOption([Id,Name_msg,Options],Option, NFlow):-
-    append(Options,[Option],NOptions),
-    delete_duplicate_option(NOptions, NNOptions),
-    flow(Id,Name_msg,NNOptions,NFlow).
-
-
+    get_Code_Option(Option,Code),
+    not(is_id_in_list(Code,Options)),
+    unir(Options,[Option],NOptions),
+    flow(Id,Name_msg,NOptions,NFlow).
 
 %5)
 
- /*Descripción:
-
+ /*Descripción: Función que crea un chatbot con un id único.
  */
 
  /*Dom:
-
+ ChatbotID (int)
+ Name (String)
+ WelcomeMessage (String)
+ StartFlowId(int)
+ Flows (Lista de 0 o más flujos)
+ Chabot
  */
+
+chatbot(ChatbotID,Name,WelcomeMessage,StartFlowId,Flows,Chatbot):-
+    positivo_mayor_que_cero(ChatbotID),
+    string(Name),
+    string(WelcomeMessage),
+    positivo_mayor_que_cero(StartFlowId),
+    all_flows(Flows),
+    Chatbot = [ChatbotID,Name,WelcomeMessage,StartFlowId,Flows].
