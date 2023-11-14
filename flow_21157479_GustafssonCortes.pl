@@ -1,15 +1,18 @@
 % % TDA FLOW % %
 
+/*--------MÓDULOS--------*/
 :-module(flow_21157479_GustafssonCortes,[get_Id_Flow/2,get_Nmdg_Flow/2,get_Option_Flow/2,is_flow/1,all_flows/1]).
 
-/*Representación:
-Este TDA representa las opciones/respuestas que puede optar el usuario ante el chatbot, se constituye por un id unico de tipo entero positivo,
-un mensaje que entregar de tipo string, el link del id del chatbot asociado de tipo entero positivo al igual que el id del flow inicial
-y también posee una lista de las palabras claves, que cada una es de tipo string.
+:-use_module(main_21157479_GustafssonCortes,[flow/4]).
+
+
+/*--------Representación--------
+Este TDA representa un flujo en particular sin ningun tipo de repticion de un chatbot, este se representa por un id unico de tipo entero positivo,
+un nombre del mensaje propiamente tal del flujo de tipo strinng y un listado de las posibles opciones a escoger, donde cada uno de los elementos es de tipo option.
 */
 
 
-/*Predicados
+/*--------Predicados--------
 get_Id_Flow(Flow,Id).
 get_Nmdg_Flow(Flow,Name_msg).
 get_Option_Flow(Flow,Options).
@@ -17,7 +20,7 @@ is_flow(List).
 all_flows(List).
 */
 
-/*Metas:
+/*--------Metas--------
  Principal: ---
 
  Secundario: get_Id_Flow, get_Nmdg_Flow, get_Option_Flow, is_flow(List),
@@ -25,17 +28,11 @@ all_flows(List).
 
 */
 
-%CLAUSULAS:
-%Hechos: --- .
-
-%Reglas:
-
-
-/*CONSTRUCTORES*/
+/*--------CONSTRUCTORES--------*/
 %En main...
 
 
-/*SELECTORES*/
+/*--------SELECTORES--------*/
 
 %Descripcion: Selecciona el id del flow.
 /*Dom:
@@ -59,7 +56,7 @@ get_Nmdg_Flow([_,Nmdg,_],Nmdg).
 get_Option_Flow([_,_,Options],Options).
 
 
-/*OTRAS OPERACIONES*/
+/*--------PERTENENCIA--------*/
 
 %Descripcion: Comprueba que una lista sea tipo flow.
 %Dom: Lista.
@@ -72,3 +69,6 @@ all_flows([]).
 all_flows([H|T]):-
     is_flow(H),
     all_flows(T).
+
+
+/*--------OTRAS OPERACIONES--------*/

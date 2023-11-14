@@ -1,13 +1,18 @@
 % % SCRIPT DE PRUEBAS % %
 
-%Modulos
+/*--------MÓDULOS--------*/
 :-use_module(main_21157479_GustafssonCortes).
+
+
+
+
+/*--------SCRIPT DE PRUEBAS (entregado por la pauta)--------*/
 
 
 option(1, "1) Viajar", 12, 1, ["viajar", "turistear", "conocer"], OP1),
 option(2, "2) Estudiar", 2, 1, ["estudiar", "aprender", "perfeccionarme"], OP2),
 flow(1, "flujo1", [OP1], F10),
-flowAddOption(F10, OP2, F11).
+flowAddOption(F10, OP2, F11),
 % flowAddOption(F10, OP1, F12).%si esto se descomenta, debe dar false, porque es opción con id duplicada.
 
 chatbot(0, "Inicial", "Bienvenido\n¿Qué te gustaría hacer?", 1, [F11], CB0), %solo añade una ocurrencia de F11
@@ -38,8 +43,8 @@ option(1, "1) Carrera Técnica", 2, 1, ["Técnica"], OP16),
 option(2, "2) Postgrado", 2, 1, ["Doctorado", "Magister", "Postgrado"], OP17),
 option(3, "3) Volver", 0, 1, ["Volver", "Salir", "Regresar"], OP18),
 flow(1, "Flujo 1 Chatbot2\n¿Qué te gustaría estudiar?", [OP16, OP17, OP18], F30),
-chatbot(2, "Orientador Académico",  "Bienvenido\n¿Qué te gustaría estudiar?", 1, [F30], CB2).
-/*
+chatbot(2, "Orientador Académico",  "Bienvenido\n¿Qué te gustaría estudiar?", 1, [F30], CB2),
+
 system("Chatbots Paradigmas", 0, [CB0], S0),
 
 % systemAddChatbot(S0, CB0, S1), %si esto se descomenta, debe dar false, porque es chatbot id duplicado.
@@ -60,7 +65,10 @@ systemLogin(S5, "user1", S7),
 % systemLogin(S7, "user2", S8), %si esto se descomenta, debe dar false, ya hay usuario con login
 
 systemLogout(S7, S9),
-systemLogin(S9, "user2", S10),
+systemLogin(S9, "user2", S10).
+
+
+/*
 systemTalkRec(S10, "hola", S11),
 systemTalkRec(S11, "1", S12),
 systemTalkRec(S12, "1", S13),

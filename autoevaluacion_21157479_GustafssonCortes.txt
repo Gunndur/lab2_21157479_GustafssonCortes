@@ -1,0 +1,50 @@
+Requerimientos No Funcionales:
+
+1. Autoevaluación: 1
+
+2. Lenguaje: 1
+
+3. Standard: 1
+
+4. Versión: 1
+
+5. Documentación: 1
+
+6. Organización: 1
+
+7. Historial: 0.75
+
+8. Script de pruebas: 1
+
+9. Prerrequisitos: 1
+
+---------------------------------
+
+Requerimientos Funcionales:
+1. TDAs: 0.75
+
+2. option: 1
+
+3. flow: 1
+
+4. flowAddOption: 1
+
+5. chatbot: 1
+
+6. chatbotAddFlow: 1
+
+7. system: 1
+
+8. systemAddChatbot: 1
+
+9. systemAddUser:1
+
+10. systemLogin: 1
+
+11. systemLogout: 1
+
+12. systemTalkRec: 0
+
+13. systemSynthesis: 0
+
+14. systemSimulate: 0
